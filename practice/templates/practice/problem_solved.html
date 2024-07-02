@@ -1,0 +1,51 @@
+{% extends 'base/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% block extra_css %}
+<style>
+    body {
+        /* font-family: monospace; */
+        font-size: 16px;
+        background: #282828;
+        color: #aaaaac;
+    }
+
+    .blue {
+        color: #007acc;
+    }
+
+    .standardized-btn {
+        background-color: transparent;
+        text-align: center;
+        align-content: center;
+        margin-right: 5px;
+        padding: 7px;
+        width: 150px;
+        border-color: #007acc;
+        border-width: 3px;
+        color: #007acc;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+<center>
+    <h1 class="adjust-font">Problem Solved!</h1>
+    <h4 class="adjust-font">{{ title }}</h4>
+
+    <b class="adjust-font">Your time: </b><div class="blue adjust-font">{{ minutes }}:{{ seconds }}</div>
+    <br/>
+
+    <b class="adjust-font">Experience earned: </b><div class="blue adjust-font">{{ experience_points }}</div>
+    <br/>
+
+    <a class="btn btn-outline-dark standardized-btn adjust-font" href="{% url 'dashboard' %}">
+        Go to Dashboard
+    </a>
+</center>
+
+<script src="{% static 'practice/js/change_font.js' %}"></script>
+{% endblock %}

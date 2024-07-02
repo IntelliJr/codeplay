@@ -1,0 +1,186 @@
+body{
+    background-color:#282829;
+}
+/* .container-fluid{
+    display: flex;
+    flex-direction: row;
+} */
+*{
+    font-family: Consolas, monaco, monospace;
+}
+.ace_editor { 
+    font-family: monospace;
+    height:50%;
+    /* height: 118%; */
+}
+
+#theme-button {
+    display: inline-block;
+    margin-top: 5px; /* Add some margin for spacing */
+    
+    border: 3px solid #007acc; /* Example border */
+    padding: 5px 5px; /* Add some padding inside the border */
+    color: #007acc;
+    font-weight: bold;
+
+}
+#font-button{
+    display: inline-block;
+  margin-top: 10px;
+  
+}
+
+
+.standardized-btn {
+    background-color: transparent;
+    text-align: center;
+    align-content: center;
+    margin-right: 5px;
+    padding: 7px;
+    width: 100px;
+    border-color: #007acc;
+    border-width: 3px;
+    color: #007acc;
+    font-weight: bold;
+}
+
+.give-up-btn {
+    display: inline-block;
+}
+
+.finish-btn {
+    display: inline-block;
+   
+    border: 3px solid #007acc; /* Example border */
+    padding: 5px 5px; /* Add some padding inside the border */
+    color: #007acc;
+    font-weight: bold;
+}
+
+.run-btn {
+    display: inline-block;
+    border: 3px solid #007acc; /* Example border */
+    padding: 5px 5px; /* Add some padding inside the border */
+    color: #007acc;
+    font-weight: bold;
+}
+
+
+
+#font-button {
+    font-weight: bold;
+    font-size: 20px;
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: transparent;
+}
+
+#output {
+    height:30%;
+    /* height: 74%; */
+    width: 100%;
+    resize: none;
+    overflow: auto;
+    background-color: #383a3b;
+}
+
+.main-row{
+    width:100%;
+}
+.col-md-4-lcol{/*Coding title background*/
+    display: inline-block;
+    vertical-align: top;
+    background-color:#282828;
+    width:39.38%;
+    /* max-width: 100%; */   
+}
+
+.col-md-8-rcol{/*Code </> background*/
+    display: inline-block;
+    /* max-width: 100%; */
+    width: 60%;
+    background-color: #383A3B;
+}
+.col-md-12-codeSym{ /*Code</>*/
+  color: #61998E;
+  min-height: 10%;
+  position: absolute;
+  top: 0;
+  
+  background: #383A3B;
+  width: 60%;
+}
+/*#61998E*/
+/* Coding title background */
+col
+.col-md-12-codTit{
+    background-color: #282829;
+    width: 100%;
+    color:#AAAAAC ; 
+}
+/* Coding explanation title */
+#col-md-12-codTitFont{
+    width:100%;
+    color:#AAAAAC ;
+    text-align: center;
+}
+
+/*Difficulty Text*/
+.col-md-4-info{
+    width:32.29%;
+    display: inline-block;
+    background-color: #383A3B;
+    text-align: center;
+}
+
+#Difficulty{
+    color:#61998E;
+    
+    width: 100%;
+}
+#Coding_language{
+    color:#AAAAAC;
+ 
+    width: 100%;
+}
+#avg_time{
+    color:#AAAAAC;
+ 
+    width: 100%;
+}
+
+#description{
+    color:#AAAAAC;
+    font-size: 20px;
+    text-wrap:stable;
+}
+
+/* CHATBOX */
+
+    #id_chat_item_container {
+        
+        height: 300px; /* Adjust the height as needed */
+        overflow-y: auto;  
+        border: 4px solid #383A3B;
+        background-color: #282829; 
+        border-radius: 10px;
+        width: 100%;
+              /* Optional: add padding */
+    }
+    #id_chat_item_container div { 
+        color:#AAAAAC;
+        font-size: 20px;
+        text-wrap:stable;
+    }
+    #input-stuff{
+        width:100%;
+        display: inline-block;
+
+    }
+    #id_message_send_input{
+        padding: 10px; 
+        border-radius: 5px;
+        width: 80%;
+         /* Makes input and button display inline*/
+    }

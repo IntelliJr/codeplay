@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href= "{%static 'mentorCode/search_styles_dark.css' %}">
+    </head>
+    <body>
+        <div id="finding-msg">
+            <h1 id="msg" class="adjust-font">Finding Partner...</h1>
+        </div> 
+        </div class="container">
+            <img id='loading-gif' src="{%static 'mentorCode/spinner.gif'%}">
+        </div>
+        <script src="{% static 'mentorCode/js/change_font.js' %}"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                applyStoredFont();
+                applyStoredFontSize();
+            });
+        </script>
+    </body>
+</html>  
+
+{% comment %} {%load static %}
+
+<form method="POST">
+    {% csrf_token %} 
+    {{ form.as_p }} 
+    <button type="submit">Search for Problems</button>
+  </form>
+{% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+          <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+      {% endfor %}
+  </ul>
+
+{% endif %} {% endcomment %}
+{% comment %} {%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Codeplay</title>
+    <link href="https://fonts.cdnfonts.com/css/open-dyslexic" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'mentorCode/search_styles_dark.css' %}">
+</head>
+<body>
+
+    <section id="searchSection">
+        <form method="GET"> 
+            <button type="button" id="startSearchButton">Start Searching</button>
+        </form>
+    </section>
+
+    <section id="waitingSection" style="display: none;">
+         <h1>Waiting for a Mentee...</h1> 
+    </section>
+
+    <script src="{% static 'mentorCode/js/change_font.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () { 
+          applyStoredFont();
+        });
+
+        const startSearchButton = document.getElementById("startSearchButton");
+        const searchSection = document.getElementById("searchSection");
+        const waitingSection = document.getElementById("waitingSection");
+
+        startSearchButton.addEventListener("click", () => {
+            searchSection.style.display = "none";
+            waitingSection.style.display = "block";
+
+            // Start your mentor search logic here (e.g., AJAX polling, etc.)
+        });
+    </script>
+</body>
+</html> {% endcomment %}

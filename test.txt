@@ -1,0 +1,53 @@
+trst
+bump
+bump2
+zamina mina eh eh
+bump
+recovering
+good heavens aws why do u want to make so much money
+wasted time
+
+Well I might as well prepare the rest of the problems here
+=========================================
+ID: 
+Title: Sum Even Numbers
+Description: Return the sum of the positive integers from a given list. Name your function sum_even_numbers().
+Difficulty: Easy
+Test cases: yeah no
+[2, 4, 6, 8, 10] -> 30
+[1, 3, 5, 7, 9] -> 0
+[2, 3, 5, 7, 11] -> 2
+[-2, -4, 0, 2, 3, 5, 7, 11, 1000] -> 996
+
+Author: <id of admin user>
+-----------------------------------------
+ID: 
+Title: Word Frequency
+Description: Given a list of words, return a dictionary, where the keys are the unique words in the list, and the values are the frequencies of those words in the list.
+Name your function word_frequency().
+Difficulty: Medium
+Test cases: yeah no
+[] -> {}
+["apple", "banana", "apple", "orange", "banana", "apple"] -> {'apple': 3, 'banana': 2, 'orange': 1}
+["cat", "dog", "cat", "bird", "cat", "dog", "fish"] -> {'cat': 3, 'dog': 2, 'bird': 1, 'fish': 1}
+["apple", "banana", "apple", "orange", "banana", "apple", "Apple", "Orange"] -> {'apple': 3, 'banana': 2, 'orange': 1, 'Apple': 1, 'Orange': 1}
+
+Author: <id of admin user>
+-----------------------------------------
+ID:
+Title: Fibonacci
+Description: Given n, return the nth number of the Fibonacci sequence. Return -1 for any invalid inputs. Try to solve the problem using recursion. Name your function fibonacci(). \nNote: for the purposes of this problem fibonacci(1) = 0
+Difficulty: Hard
+Test cases: yeah no
+1 -> 0
+2 -> 1
+3 -> 1
+5 -> 3
+7 -> 8
+16 -> 610
+-1 -> -1
+0.1 -> -1
+
+Author: <id of admin user>
+=========================================
+a

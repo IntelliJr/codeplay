@@ -1,0 +1,187 @@
+{% extends 'base/main.html' %}
+{%load static%}
+{% block content %}
+
+{% if form.errors %}
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        There was an error with your form...
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+{% endif %}
+
+<link rel="stylesheet" type="text/css" href=  "{%static 'landing_page/css/styles.css'%}" />
+
+<style>
+    .sign-up-container{
+        animation:
+        typing 6s steps(40,end),
+        blink-caret 0.75s step-end 0.5s 1 forwards;   
+
+    }
+</style>
+
+
+<div class="shadow p-4 mb-5 card rounded w-75 mx-auto">
+    <div class="sign-up-container">
+        <h1 id="sign-up-text" class="text-center">&lt;Sign Up&gt;</h1>
+    </div>
+    <br/>
+    <form action="{% url 'register_user' %}" method="post">
+        {% csrf_token %}
+        
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}" placeholder=" " required>
+            <label for="{{ form.username.id_for_label }}">Username</label>
+            {% if form.username.errors %}
+                <small id="usernameHelp" class="form-text text-danger">{{ form.username.errors }}</small>
+            {% endif %}
+        </div>
+        
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.html_name }}" placeholder=" " required>
+            <label for="{{ form.first_name.id_for_label }}">First Name</label>
+            {% if form.first_name.errors %}
+                <small id="firstnameHelp" class="form-text text-danger">{{ form.first_name.errors }}</small>
+            {% endif %}
+        </div>
+        
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.html_name }}" placeholder=" " required>
+            <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+            {% if form.last_name.errors %}
+                <small id="lastnameHelp" class="form-text text-danger">{{ form.last_name.errors }}</small>
+            {% endif %}
+        </div>
+        
+        <div class="form-floating mb-3">
+            <select class="form-select" id="{{ form.education_level.id_for_label }}" name="{{ form.education_level.html_name }}" aria-label="Floating select" required>
+                <option selected>Choose your education level</option>
+                {% for value, label in form.education_level.field.choices %}
+                    <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+            <label for="{{ form.education_level.id_for_label }}">Education Level</label>
+            {% if form.education_level.errors %}
+                <small id="educationLevelHelp" class="form-text text-danger">{{ form.education_level.errors }}</small>
+            {% endif %}
+        </div>
+        
+        <div class="form-floating mb-3">
+            <p>Are you a mentor?</p>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="mentorYes" name="{{ form.is_mentor.html_name }}" value="True">
+                <label class="form-check-label" for="mentorYes">Yes</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="mentorNo" name="{{ form.is_mentor.html_name }}" value="False">
+                <label class="form-check-label" for="mentorNo">No</label>
+            </div>
+            {% if form.is_mentor.errors %}
+                <small id="isMentorHelp" class="form-text text-danger">{{ form.is_mentor.errors }}</small>
+            {% endif %}
+        </div>
+        
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}" placeholder=" " required>
+            <label for="{{ form.password.id_for_label }}">Password</label>
+            {% if form.password.errors %}
+                <small id="passwordHelp" class="form-text text-danger">{{ form.password.errors }}</small>
+            {% endif %}
+        </div>
+        
+        <div class="text-center">
+            <input type="submit" value="Submit" class="btn btn-dark">
+        </div>
+        
+    </form>
+    
+
+    
+
+    
+
+    
+    
+        
+
+
+        <!-- <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="pp" placeholder="Enter username">
+            <label for="pp">Username</label>
+           
+            {% if form.username.errors %}
+                <small id="usernameHelp" class="form-text text-danger">{{ form.username.errors }}</small>
+            {% endif %}
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="id_first_name" name="first name" placeholder="Enter first name">
+            <label for="id_first_name">First Name</label>
+            
+            {% if form.first_name.errors %}
+                <small id="firstnameHelp" class="form-text text-danger">{{ form.first_name.errors }}</small>
+            {% endif %}
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="id_last_name" name="last name" placeholder="Enter last name">
+            <label for="id_last_name">Last Name</label>
+            {% if form.last_name.errors %}
+                <small id="lastnameHelp" class="form-text text-danger">{{ form.last_name.errors }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-floating mb-3">
+            <select class="form-select" id="id_education_level" aria-label = "Floating select">
+                <option selected>Choose your education level </option>
+                {% for choice in form.education_level.field.choices %}
+                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endfor %}
+            </select>
+            <label for="id_education_level">Education Level</label>
+            
+            {% if form.education_level.errors %}
+                <small id="educationLevelHelp" class="form-text text-danger">{{ form.education_level.errors }}</small>
+            {% endif %}
+        </div>
+
+        
+            <label class = "mb-2">Are you a mentor?</label>
+            
+            <div class="form-group mb-3">
+                <input type="radio" class="btn-check" name="options-outlined" id="yes-outlined" autocomplete="off" checked>
+                <label class="btn btn-outline-dark mx-2" for="yes-outlined">Yes</label>
+
+
+                <input type="radio" class="btn-check" name="options-outlined" id="no-outlined" autocomplete="off">
+                <label class="btn btn-outline-dark" for="no-outlined">No</label>
+
+                {% if form.is_mentor.errors %}
+                <small id="isMentorHelp" class="form-text text-danger">{{ form.is_mentor.errors }}</small>
+                {% endif %}
+  
+            </div>
+            
+
+       
+
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="id_password" name="password" placeholder="Enter password" required>
+            <label for="id_password">Password</label>
+            {% if form.password.errors %}
+                <small id="passwordHelp" class="form-text text-danger">{{ form.password.errors }}</small>
+            {% endif %}
+        </div>
+        <br/><br/>
+
+        <input type="submit" value="Submit" class="btn btn-secondary"> -->
+
+
+
+    
+        <!-- {{ form.as_p }} -->
+        
+        <!-- <input type="submit" value="Submit" class="btn btn-secondary"> -->
+    
+</div>
+{% endblock %}

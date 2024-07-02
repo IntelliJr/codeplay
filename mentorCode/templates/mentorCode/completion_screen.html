@@ -1,0 +1,32 @@
+{% extends "base/main.html" %}
+
+{% load static %}
+
+{% csrf_token %}
+{% block content %}
+<head>
+<style>
+    .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;  
+    } 
+    #msg {
+        color:#AAAAAC;
+        /* font-family: Consolas, monaco, monospace; */
+        {% comment %} text-align: center;
+        lineeight: 200%;-h {% endcomment %}
+    }
+    body {
+        background-color: #212121;
+    }
+</style>
+</head>
+
+<script src="{% static 'mentorCode/js/change_font.js' %}"></script>
+
+<div class ="center">
+<h1 id="msg" class="adjust-font"> Well Done, You Completed The Question</h1>
+</div>
+{%endblock%}

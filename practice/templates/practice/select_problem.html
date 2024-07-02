@@ -1,0 +1,64 @@
+{% extends 'base/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% block extra_css %}
+<style>
+    body {
+        font-family: monospace;
+        font-size: 16px;
+        background: #282828;
+        color: #aaaaac;
+    }
+</style>
+{% endblock %}
+
+<center class="adjust-font">
+    <form action="" method="post" class="">
+        {% csrf_token %}
+
+        <label for="languages">Select language:</label>
+        <br/>
+        <select id="languages" name="language">
+            <option value="select">Select language...</option>
+            <option value="Python">Python</option>
+            <option value="C">C</option>
+            <option value="C++">C++</option>
+        </select>
+        <br/>
+        <br/>
+        <label for="difficulties">Select difficulty:</label>
+        <br/>
+        <select id="difficulties" name="difficulty">
+            <option value="select">Select difficulty...</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+        </select>
+        <br/>
+        <br/>
+        <label for="topics">Select topic (optional):</label>
+        <br/>
+        <select id="topics" name="topic">
+            <option value="select">Select topic...</option>
+            <option value="For Loops">For loops</option>
+            <option value="While Loops">While loops</option>
+            <option value="Conditional Statements">If statements</option>
+            <option value="1D Arrays">Lists</option>
+            <option value="Dictionaries">Dictionaries</option>
+            <option value="Recursion">Recursion</option>
+        </select>
+        <br/>
+        <br/>
+        <em>Note: selecting a topic doesn't guarantee that it will be chosen.</em>
+        <br/>
+        <br/>
+        <input id="start_stopwatch" type="submit" value="Start" class="btn btn-secondary">
+    </form>
+</center>
+
+
+<script src="{% static 'practice/js/change_font.js' %}"></script>
+{% endblock %}

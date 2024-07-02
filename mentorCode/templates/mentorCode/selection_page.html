@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.cdnfonts.com/css/open-dyslexic" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'mentorCode/search_styles_dark.css' %}">
+    <script src="{% static 'mentorCode/js/change_font.js' %}"></script>
+</head>
+<body>
+    <section id="formSection"> 
+        <form method="POST" action="{% url 'coding_selection' %}" class="adjust-font">  
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="button" id="submitButton" class="adjust-font">Find Mentor</button> 
+        </form> 
+        {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+              <li {% if message.tags %} class="{{ message.tags }} adjust-font" {% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+    </section>
+
+    <section id="contentSection" style="display: none;">
+      <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body>
+            <div id="finding-msg">
+                <h1 id="msg" class="adjust-font">Finding Partner...</h1>
+            </div> 
+            </div class="container">
+                <img id='loading-gif' src="{% static 'mentorCode/spinner.gif' %}">
+            </div>
+        </body>
+    </html> 
+         </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () { 
+        applyStoredFont();
+        applyStoredFontSize();
+      });
+
+      const submitButton = document.getElementById("submitButton");
+      const formSection = document.getElementById("formSection");
+      const contentSection = document.getElementById("contentSection");
+
+      submitButton.addEventListener("click", () => {
+          formSection.style.display = formSection.style.display === 'none' ? 'block' : 'none'; 
+          contentSection.style.display = contentSection.style.display === 'none' ? 'block' : 'none';
+
+          // Submit the form 
+          document.querySelector('form').submit(); 
+      });
+    </script>
+</body>
+</html>

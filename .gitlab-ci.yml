@@ -1,0 +1,161 @@
+stages:
+  - build
+  - test
+  - release
+  - deploy
+
+build-job:
+  image: python:latest
+  tags:
+    - finalrunner
+  stage: build
+  before_script: pip install virtualenv
+
+  script:
+    - echo "creating virtual environment for the project..."
+    - python3 -m venv venv
+    - echo "Installing requirements..."
+    - pip install -r requirements.txt
+
+  artifacts:
+    paths:
+      - venv/
+      - db.sqlite3
+
+test-job:
+  image: python:latest
+  tags:
+    - finalrunner
+  stage: test
+  script:
+    - echo "please work"
+    - echo "Activating virtual environment..."
+    - source venv/bin/activate
+    - echo "Installing requirements..."
+    - pip install -r requirements.txt
+    - echo "Running unit tests..."
+    - python manage.py test base
+    - python manage.py test authapp
+    - python manage.py test landing_page
+    - python manage.py test practice
+    - python manage.py test mentorCode
+    - python manage.py test user_dashboard
+    - echo "Checking the server..."
+    - python manage.py runserver 0.0.0.0:8000 &
+    - echo "Migrating the database"
+    - python manage.py makemigrations base
+    - python manage.py makemigrations authapp
+    - python manage.py makemigrations landing_page
+    - python manage.py makemigrations practice
+    - python manage.py makemigrations user_dashboard
+    - python manage.py makemigrations mentorCode
+    - python manage.py migrate
+    - curl -sSf http://localhost:8000 > /dev/null && echo "Server is Up"
+    - pkill python
+    - deactivate
+    - echo "All tests successfully passed."
+
+
+
+release-job:
+  image: docker
+  stage: release
+  tags:
+    - finalrunner
+  services:
+    - docker:dind
+      
+
+  variables:
+    DOCKER_HOST: 'tcp://docker:2375'
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  
+  
+  script:
+  - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+  - docker rmi $CI_REGISTRY_IMAGE || true  
+  - docker build --no-cache -t $CI_REGISTRY_IMAGE .
+  - echo "${CI_COMMIT_SHA}"
+  - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA}
+  - docker image ls
+  - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA}
+
+
+
+deploy-dev:
+  stage: deploy
+  tags:
+    - finalrunner
+  image: alpine:latest
+
+  variables:
+    SSH_USER: "ec2-user"
+    DOCKER_HOST: 'tcp://docker:2375'
+    DOCKER_DRIVER: overlay
+    DOCKER_TLS_CERTDIR: ""
+    SSH_HOST: "ec2-13-51-100-132.eu-north-1.compute.amazonaws.com"
+   
+   
+
+  before_script:
+    - apk add openssh
+    - mkdir -p ~/.ssh
+    - touch ~/.ssh/known_hosts
+    - chmod 700 ~/.ssh
+    - chmod 600 ~/.ssh/known_hosts
+    - ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+
+  script:
+    - eval $(ssh-agent -s)
+    - echo "$SSH_KEY" | tr -d '\r' | ssh-add -
+    - echo "$SSH_KEY" > mysshkey.pem
+    - chmod 400 mysshkey.pem
+    - ssh -o StrictHostKeyChecking=no -i mysshkey.pem $SSH_USER@$SSH_HOST "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
+    - ssh -o StrictHostKeyChecking=no -i mysshkey.pem $SSH_USER@$SSH_HOST "docker stop our_container_dev || true"
+    - ssh -o StrictHostKeyChecking=no -i mysshkey.pem $SSH_USER@$SSH_HOST "docker rm -f our_container_dev || true"
+    - ssh -o StrictHostKeyChecking=no -i mysshkey.pem $SSH_USER@$SSH_HOST "docker run -d --name our_container_dev -p 5002:8000 $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA}"
+
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+
+
+deploy-prod:
+  
+  image: alpine:latest
+  stage: deploy
+  tags:
+    - finalrunner
+  when: on_success
+  only:
+    refs:
+      - prod-branch
+  dependencies:
+    - deploy-dev
+  variables:
+    SSH_USER: "ec2-user"
+    DOCKER_HOST: 'tcp://docker:2375'
+    DOCKER_DRIVER: overlay
+    DOCKER_TLS_CERTDIR: ""
+    SSH_HOST: "ec2-13-51-100-132.eu-north-1.compute.amazonaws.com"
+ 
+
+
+  before_script:
+    - apk add openssh
+    - mkdir -p ~/.ssh
+    - touch ~/.ssh/known_hosts
+    - chmod 700 ~/.ssh
+    - chmod 600 ~/.ssh/known_hosts
+    - ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+
+  script:
+    - eval $(ssh-agent -s)
+    - echo "$SSH_KEY" | tr -d '\r' | ssh-add -
+    - echo "$SSH_KEY" > mysshkey.pem
+    - chmod 400 mysshkey.pem
+    - ssh -o StrictHostKeyChecking=no -i mysshkey.pem $SSH_USER@$SSH_HOST "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
+    - ssh -o StrictHostKeyChecking=no -i mysshkey.pem $SSH_USER@$SSH_HOST "docker stop our_container_prod || true"
+    - ssh -o StrictHostKeyChecking=no -i mysshkey.pem $SSH_USER@$SSH_HOST "docker rm -f our_container_prod || true"
+    - ssh -o StrictHostKeyChecking=no -i mysshkey.pem $SSH_USER@$SSH_HOST "docker run -d --name our_container_prod -p 5003:8000 $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA}"

@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #212121">
+    <!-- <div class="containter=fluid align-items-center"> -->
+        <a href="/" class="navbar-brand mb-0 h1">
+            <span class="fs-1 adjust-font"> &lt;🎮&gt; CodePlay</span>
+        </a>
+
+        <button
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target = "#navbarNav"
+        class = "navbar-toggler"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label = "Toggle navigation"
+        >
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class = "navbar-collapse collapse adjust-font" id="navbarNav">
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                <li class="nav-item active">
+                    <a class="nav-link active" href="{% url 'dashboard' %}">Dashboard</a>
+                </li>
+                <li class="nav-item active"  >
+                    <a class="nav-link active" href="{% url 'select_problem' %}">Practice</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mentor_begin' %}">Mentoring Practice</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link active" href="{% url 'logout' %}">Sign Out</a>
+                </li>
+    
+                {% else %}
+                <li class="nav-item active ">
+                    <a class="nav-link active"  href="{% url 'register_user' %}">Sign Up</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link active" href="{% url 'login' %}">Sign In</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+</nav>

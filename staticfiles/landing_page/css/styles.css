@@ -1,0 +1,45 @@
+.animatedTextContainer {
+    display:inline-block;
+    overflow: hidden ;
+    border-right: .15em solid rgb(0, 0, 0);
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation:
+        typing 3s steps(40,end),
+        blink-caret 0.75s step-end 0.5s 1 forwards;   
+    margin-top: 10px;
+    width: 100%;
+}
+
+#animatedText {
+overflow:hidden;
+white-space: nowrap;
+position: relative;
+font-weight: bold;
+
+}
+
+@keyframes typing {
+from {width: 0;}
+to {width: 100%;}
+}
+
+@keyframes blink-caret {
+from, to {
+  border-color: transparent;
+}
+50% {
+  border-color: rgb(0, 0, 0);
+}
+}
+
+@media (max-width: 768px) {
+    .animatedTextContainer {
+        white-space: normal;
+    }
+
+    #animatedText {
+        white-space: normal;
+    }
+}

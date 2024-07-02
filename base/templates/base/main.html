@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static '/base/images/apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static '/base/images/favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static '/base/images/favicon-16x16.png' %}">
+        <link rel="manifest" href="{% static '/base/images/site.webmanifest' %}">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.7/src-min-noconflict/ace.js" defer></script>
+        <link href="https://fonts.cdnfonts.com/css/open-dyslexic" rel="stylesheet">
+        
+        {% comment %} Can be redefined in children if needed. Don't include this block in children if no override is needed. {% endcomment %}
+        {% block extra_css %}
+        <link rel="stylesheet" href="{% static 'base/css/main-styles.css' %}">
+        <link href="https://fonts.cdnfonts.com/css/open-dyslexic" rel="stylesheet">
+        {% endblock %}
+
+        <title>CodePlay</title>
+        <style>
+            body{
+                background-color: #282828;
+                color:#000000;
+            }
+            .custom-gradient-bg {
+            background: linear-gradient(0deg, #fff, #212121);
+            color: #fff;
+            }
+            .white-text{
+                color:white;
+            }
+            #containers{
+                color:black;
+            }
+        </style>
+    
+    </head>
+
+    <body style="visibility:hidden;">
+        {% comment %} Can be redefined in children if needed. Don't include this block in children if no override is needed. {% endcomment %}
+        {% block navbar %}
+        {% include 'base/navbar.html' %}
+        {% endblock navbar %}
+
+        <br/>
+        <div class="container mt-3">
+            {% if messages %}
+                {% for message in messages %}
+                    <div id="error" class="alert alert-warning alert-dismissable fade show d-flex justify-content-between adjust-font" role="alert">
+                        <div>{{ message }}</div>
+                        <button type="button" class="btn-close adjust-font" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+        <script>
+            // some code to fade errors out in 3.5 seconds
+            $(document).ready(function() {
+            $('#error').fadeIn();
+            setTimeout(function() {
+                $('#error').alert('close');
+            }, 3500);
+            });
+
+            let domReady = (cb) => {
+                document.readyState === 'interactive' || document.readyState === 'complete'
+                    ? cb()
+                    : document.addEventListener('DOMContentLoaded', cb);
+            };
+
+            domReady(() => {
+            
+                document.body.style.visibility = 'visible';
+            });
+
+        </script>    
+
+            {% block content %}
+            {% endblock %}
+
+            {% block font_scripts %}
+            <script>
+                document.addEventListener("DOMContentLoaded", function() { 
+                    applyStoredFont();
+                    applyStoredFontSize();
+                });
+            </script>
+            {% endblock %}
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+            {% block footer %}    
+            <footer id="theFooter" class="pt-3 mt-4 text-body-secondary border-top">
+                <p class="text-center display-15 fw-bold text-secondary adjust-font" style="color:#AAAAAC">
+                    You are accessing an experimental web application developed by participants of the Team Project 2024 module.
+                </p>
+                <p class="text-center"><a class="link-opacity-50-hover adjust-font" href="/privacy_policy/">Privacy Policy</a></p>
+            </footer> 
+            
+            {% endblock %}
+       </div>  
+
+    </body>
+</html>
+

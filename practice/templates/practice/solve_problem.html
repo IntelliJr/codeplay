@@ -1,0 +1,293 @@
+{% extends 'base/main.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<style>
+    body {
+        /* font-family: 'Open-Dyslexic'; */
+        font-size: 16px;
+        background: #282828;
+        color: #aaaaac;
+    }
+
+    .row {
+        margin: 5px;
+    }
+
+    .easy {
+        color: #6aa84f;
+        font-weight: bold;
+        font-size: 20px;
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .medium {
+        color: rgb(240, 240, 0);
+        font-weight: bold;
+        font-size: 20px;
+        display: inline-block;
+    }
+
+    .hard {
+        color: rgb(209, 0, 0);
+        font-weight: bold;
+        font-size: 20px;
+        display: inline-block;
+    }
+
+    .problem-title {
+        display: inline-block;
+        font-weight: bold;
+        font-size: 20px;
+        margin-right: 5px;
+        color: snow;
+    }
+
+    .language {
+        display: inline-block;
+        font-weight: bold;
+        font-size: 16px;
+        color: #808080;
+    }
+
+    .description {
+        background-color: #383a3b;
+        min-height: 550px;
+        color: snow;
+    }
+
+    .your-solution-title {
+        font-weight: bold;
+        font-size: 20px;
+        display: inline-block;
+        color: snow;
+    }
+
+    #theme-button {
+        font-weight: bold;
+        font-size: 20px;
+        float: right;
+        padding-left: 10px;
+        padding-right: 10px;
+        background-color: transparent;
+        text-decoration: none;
+        color: #969696;
+    }
+
+    #font-button {
+        font-weight: bold;
+        font-size: 20px;
+        display: inline-block;
+        float: right;
+        padding-left: 10px;
+        padding-right: 10px;
+        background-color: transparent;
+    }
+
+    .timer {
+        font-size: 20px;
+        font-weight: bold;
+        color: #007acc;
+        display: inline-block;
+        float: right;
+    }
+
+    /* Editor */
+    .ace_editor {
+        font-family: monospace;
+        height: 400px;
+    }
+
+    .tests-title {
+        font-weight: bold;
+        font-size: 20px;
+        color: snow;
+    }
+
+    #output {
+        height: 150px;
+        width: 100%;
+        resize: none;
+        overflow: auto;
+        background-color: #383a3b;
+    }
+
+    .standardized-btn {
+        background-color: transparent;
+        text-align: center;
+        align-content: center;
+        margin-right: 5px;
+        padding: 7px;
+        width: 100px;
+        border-color: #007acc;
+        border-width: 3px;
+        color: #007acc;
+        font-weight: bold;
+    }
+
+    .give-up-btn {
+        float: left;
+    }
+
+    .finish-btn {
+        float: right;
+    }
+
+    .run-btn {
+        float: right;
+    }
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+
+{% csrf_token %}
+<script src="{% static 'practice/js/stopwatch.js' %}" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.7/src-min-noconflict/ext-language_tools.js" defer></script>
+
+{% if language == 'C' or language == 'C++' %}
+<script src="{% static 'practice/js/c-cpp-editor.js' %}" defer></script>
+{% elif language == 'Python' %}
+<script src="{% static 'practice/js/python-editor.js' %}" defer></script>
+{% elif language == 'Java' %}
+<script src="{% static 'practice/js/java-editor.js' %}" defer></script>
+{% endif %}
+
+<div class="container-fluid adjust-font">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="row">
+                <span>
+                    <!-- Difficulty -->
+                    {% if difficulty == 'Easy' %}
+                    <div class="easy adjust-font">
+                        {{ difficulty }}
+                    </div>
+                    {% elif difficulty == 'Medium' %}
+                    <div class="medium adjust-font">
+                        {{ difficulty }}
+                    </div>
+                    {% elif difficulty == 'Hard' %}
+                    <div class="hard adjust-font">
+                        {{ difficulty }}
+                    </div>
+                    {% endif %}
+
+                    <!-- Title -->
+                    <div class="problem-title adjust-font">
+                        {{ title }}
+                    </div>
+
+                    <!-- Language -->
+                    <div class="language adjust-font">
+                        ({{ language }})
+                    </div>
+                </span>
+            </div>
+            <div class="row">
+                <div class="col-md-12 description">
+                    <p>{{ description }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="row heading-row">
+                <span>
+                    <div class="your-solution-title adjust-font">
+                        Your Solution
+                    </div>
+                    <div class="timer adjust-font">
+                        <span class="digit" id="min">00</span>
+                        <span class="txt">:</span>
+                        <span class="digit" id="sec">00</span>
+                    </div>
+                    <div id="font-button" class="adjust-font">
+                        <select style="background-color: transparent; font-weight: bold; color: #969696;"
+                            onchange="changeFontSize(this.value)">
+                            <option value="12pt" selected>Small</option>
+                            <option value="16pt">Medium</option>
+                            <option value="20pt">Large</option>
+                            <option value="24pt">Extra Large</option>
+                        </select>
+                    </div>
+                    <a id="theme-button" class="adjust-font" href="#" onclick="toggleTheme()">Toggle Theme</a>
+                </span>
+            </div>
+
+            <div class="row heading-row">
+                <div class="col-md-12 ace_editor" id="editor"></div>
+            </div>
+
+            <div class="row tests-title">
+                <div class="col-md-12 tests-title adjust-font">
+                    Tests
+                </div>
+            </div>
+
+            <div class="row test-output adjust-font">
+                <pre id="output"></pre>
+            </div>
+
+            <div class="row button-row">
+                <a class="col-md-4 btn standardized-btn give-up-btn adjust-font" href="{% url 'select_problem' %}">
+                    Give Up
+                </a>
+                <a class="col-md-4 btn standardized-btn finish-btn adjust-font" id="finish-button" href="{% url 'problem_solved' %}"
+                    style="display: none;">
+                    Finish
+                </a>
+                <a class="col-md-4 btn standardized-btn run-btn adjust-font" href="#" onclick="executeCode()">
+                    Run
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'practice/js/change_font.js' %}"></script>
+<script>
+    function changeFontSize(size) {
+        editor.setFontSize(size);
+    }
+
+    function toggleTheme() {
+        if (editor.getTheme() === "ace/theme/dracula") {
+            editor.setTheme("ace/theme/tomorrow"); // sqlserver
+        } else {
+            editor.setTheme("ace/theme/dracula");
+        }
+    }
+
+    function executeCode() {
+        $.ajax({
+            type: "POST",
+            url: "/practice/solve_problem",
+            data: {
+                userCode: editor.getSession().getValue(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+            },
+            success: function (response) {
+                $('#output').text(response.actual_output).css("color", "snow");
+                console.log(response.tests_passed)
+                if (response.tests_passed) {
+                    $('#finish-button').show();
+                } else {
+                    $('#finish-button').hide();
+                    $('#output').css("color", "red");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log("Ajax error:");
+                console.error(error);
+                $('#output').text("COMPILATION ERROR.\nCheck your function name, imports, and syntax.").css("color", "red");
+            },
+        });
+    }
+</script>
+{% endblock %}
