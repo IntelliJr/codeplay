@@ -64,7 +64,7 @@ appname/
 - Run `python manage.py collectstatic` to dump all the static files into their special directory **(required for static files to work in deployment)**.
 - Run `python manage.py check --deploy` to check if your project is ready for deployment.
 - Run `$env:DJANGO_SETTINGS_MODULE="codeplay.settings.localdev"` in the VS Code terminal while in the base directory to switch to development settings.
-- Run `$env:DJANGO_SETTINGS_MODULE="codeplay.settings.deploy"` in the VS Code terminal while in the base directory to production.
+- Run `$env:DJANGO_SETTINGS_MODULE="codeplay.settings.deploy"` in the VS Code terminal while in the base directory to switch to production settings.
 
 ## Commit Instructions
 1. Only commits made to the `prod-branch` branch are pushed to prod. 
