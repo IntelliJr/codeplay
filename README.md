@@ -1,6 +1,6 @@
 # Team Project
 Repository of team 70dub. 
-Personal contribution: practice app (giving users random programming problems, checking solutions, giving rewards), accessibility features (font size, dyslexia font). 
+Personal contribution: practice app (giving users random programming problems, checking solutions, giving rewards), accessibility features (font size, dyslexia font), Django project configuration, readme. 
 
 ## Website links (inactive)
 - [Production](https://team70dub.bham.team/)
