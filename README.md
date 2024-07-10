@@ -1,5 +1,6 @@
 # Team Project
-## This repository belongs to team 70dub
+Repository of team 70dub. 
+Personal contribution: practice app (giving users random programming problems, checking solutions, giving rewards), accessibility features (font size, dyslexia font). 
 
 ## Website links (inactive)
 - [Production](https://team70dub.bham.team/)
