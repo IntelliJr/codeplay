@@ -1,6 +1,10 @@
 # Team Project
-Repository of team 70dub. 
-Personal contribution: practice app (giving users random programming problems, checking solutions, giving rewards), accessibility features (font size, dyslexia font), Django project configuration, readme. 
+Repository of team 70dub.
+CodePlay is a competitive coding website with gamification elements for university students.
+Personal contribution:
+- Developed the "practice" feature which includes giving the users random programming problems, testing their solutions, and giving them rewards based on their performance. 
+- Implemented such accessibility features as font size change and optional dyslexia font. 
+- Configured the Django project for the team and prepared the setup instructions for development.
 
 ## Website links (inactive)
 - [Production](https://team70dub.bham.team/)
