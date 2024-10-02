@@ -1,5 +1,4 @@
-# Team Project
-Repository of team 70dub.
+# Team Project (Team 70dub)
 CodePlay is a competitive coding website with gamification elements for university students.
 Personal contribution:
 - Developed the "practice" feature which includes giving the users random programming problems, testing their solutions, and giving them rewards based on their performance. 
